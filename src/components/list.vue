@@ -16,13 +16,21 @@
       :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
       style="width: 100%">
       <el-table-column
-        label="Date"
-        prop="date">
-      </el-table-column>
-      <el-table-column
         label="Name"
         prop="name">
       </el-table-column>
+
+      <el-table-column
+        label="最近一次改变"
+        prop="recentlyDate">
+      </el-table-column>
+
+      <el-table-column
+        label="创建时间"
+        prop="date">
+      </el-table-column>
+
+
       <el-table-column
         align="right">
         <template slot="header" slot-scope="scope">
@@ -34,7 +42,7 @@
         <template slot-scope="scope">
           <el-button
             size="mini"
-            @click="handleEdit()">Edit
+            @click="handleEdit(scope.$index, scope.row)">Edit
           </el-button>
           <el-button
             size="mini"
@@ -51,26 +59,24 @@
 <script>
   export default {
     name: "list",
+    props:{
+      tableData:Array
+    },
     data() {
       return {
         isShow:false,//传给父组件
-        tableData: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄'
-        }],
+        input:"",//插入的试卷题目
         search: ''
       }
     },
     methods: {
-      handleEdit() {
+      handleEdit(index, row) {
+        // index代表第几行，row代表这一行的信息
+        console.log(row.category_id,row.sub_id);//这一行的信息
+        // row.category_id,row.sub_id感觉没必要传给父组件，先不删，等下再看
         // childByValue是在父组件on监听的方法
         // 第二个参数this.this.isShow是需要传的值
-        this.$emit('childByValue', this.isShow)
+        this.$emit('childByValue', this.isShow,index,row.category_id,row.sub_id);
       },
       handleDelete(index, row) {
         console.log(index, row);
