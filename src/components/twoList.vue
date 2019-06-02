@@ -57,6 +57,21 @@
         // console.log(tab.index);
         let idx = Number(tab.index);
         if (idx === 0) {
+          this.$axios({
+            methods: 'post',
+            url:"127.0.0.1:7001/findList",
+            data:{
+              big_block:1,//大类号
+              category_id:30,//小类号
+            }
+          }).then(res=>{
+            console.log(res);
+            alert("111");
+          }).catch(err=>{
+           console.log(err)
+
+          });
+
           this.tableData = [{
             date: '对象1',
             recentlyDate: '待实现',

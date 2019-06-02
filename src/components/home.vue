@@ -2,8 +2,6 @@
   <div class="app">
     <div class="left">
       <template>
-
-
         <el-tabs :tab-position="tabPosition" style="height: 200px;">
           <el-tab-pane label="前端">
             <TwoList></TwoList>
@@ -31,8 +29,8 @@
     components:{TwoList},
     data(){
       return{
-        tabPosition: 'left',//左边自动选择项
-        activeName: 'first',//前端类，右边自动选择项目
+        tabPosition: 'left',//左右排列
+        activeName: 'first',//自动选择左边第一个
       }
     }
   }
