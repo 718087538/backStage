@@ -1,25 +1,23 @@
 <template>
-  <div>
+  <div class="app">
     <div class="left">
       <template>
 
 
         <el-tabs :tab-position="tabPosition" style="height: 200px;">
           <el-tab-pane label="前端">
-            <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
-              <el-tab-pane label="用户管理" name="first">
-<List></List>
-
-
-              </el-tab-pane>
-              <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
-              <el-tab-pane label="角色管理" name="third">角色管理</el-tab-pane>
-              <el-tab-pane label="定时任务补偿" name="fourth">定时任务补偿</el-tab-pane>
-            </el-tabs>
+            <TwoList></TwoList>
           </el-tab-pane>
           <el-tab-pane label="后端">配置管理</el-tab-pane>
           <el-tab-pane label="数据库">角色管理</el-tab-pane>
           <el-tab-pane label="网络">定时任务补偿</el-tab-pane>
+          <el-tab-pane label="算法">定时任务补偿</el-tab-pane>
+          <el-tab-pane label="安全">定时任务补偿</el-tab-pane>
+          <el-tab-pane label="非技术">定时任务补偿</el-tab-pane>
+          <el-tab-pane label="团队合作">定时任务补偿</el-tab-pane>
+          <el-tab-pane label="英语">定时任务补偿</el-tab-pane>
+          <el-tab-pane label="待定">定时任务补偿</el-tab-pane>
+          <el-tab-pane label="待定">定时任务补偿</el-tab-pane>
         </el-tabs>
       </template>
     </div>
@@ -27,10 +25,10 @@
 </template>
 
 <script>
-  import List from "./list"
+  import TwoList from './twoList'
   export default {
     name: "",
-    components:{List},
+    components:{TwoList},
     data(){
       return{
         tabPosition: 'left',//左边自动选择项
@@ -41,5 +39,11 @@
 </script>
 
 <style scoped>
+.app{
+
+}
+  .el-tabs,.el-tabs--left{
+    height: 600px !important;
+  }
 
 </style>

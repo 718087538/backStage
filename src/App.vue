@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <h1>chd</h1>
     <!--<input type="radio" ref="" value="20" v-model="category_id"> h5-->
     <!--<br>-->
     <!--<input type="radio" ref="" value="10"  v-model="category_id"> css-->
