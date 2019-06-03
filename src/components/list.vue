@@ -52,6 +52,7 @@
         </template>
       </el-table-column>
     </el-table>
+    <h1>{{tableData}}</h1>
   </div>
 
 </template>
@@ -83,13 +84,19 @@
         console.log(index, row);
       },
       addTest(){
+        alert(this.tableData.category_id,"11");
+        alert(this.tableData.sub_id,"22");
+        return false;
+
         this.$axios({
+
+
           method: "post",
           url: "http://127.0.0.1:7001/addTitle",
           data: {
-            big_block: 1,//大类号
-            category_id: 30,//小类号
-            sub_id:23,
+            big_block: this.tableData.big_block,//大类号
+            category_id: 33,//小类号
+            sub_id: 20,
             //上面3个决定了插到那张试卷
             title:this.title,
             creat_time:'2019-01-01',
