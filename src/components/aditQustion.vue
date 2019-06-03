@@ -17,7 +17,7 @@
         <template slot="prepend">答案：</template>
       </el-input>
       <el-row>
-        <el-button type="primary" class="addBtn">确认添加</el-button>
+        <el-button type="primary" class="addBtn" @click="add">确认添加</el-button>
       </el-row>
     </div>
     <!--这下面是已经插入的题目-->
@@ -32,7 +32,7 @@
         <div>解释:{{item.plain}}</div>
       </el-collapse-item>
     </el-collapse>
-    <!--<h1>{{tableData}}</h1>-->
+    <h1>{{tableData}}</h1>
   </div>
 </template>
 
@@ -40,7 +40,7 @@
   export default {
     name: "aditQustion",
     props:{
-      tableData:Array
+      tableData:Object
     },
     data(){
       return{
@@ -57,11 +57,7 @@
         big_block: 1,//从那个大类查询
         category_id:20,//从哪个小类查询
         sub_id:"",//查询那道小题
-        dataList:[
-          {},
-          {},
-          {},
-        ],//查到的题目列表
+        dataList:[],//查到的题目列表
       }
     },
     methods: {
@@ -71,6 +67,26 @@
       },
       handleChange(val) {
         console.log(val);
+      },
+      //添加题目到本试卷
+      add(){
+        this.$axios({
+          method:"post",
+          url: "http://127.0.0.1:7001/add",
+          data:{
+            big_block:this.tableData.big_block,//大类号
+            category_id:this.tableData.category_id,//小类号
+            sub_id: this.tableData.sub_id,
+            //上面3个决定了插到那张试卷
+            title:this.title,
+            optiona: this.optiona,optionb: this.optionb,optionc: this.optionc,optiond: this.optiona,key:this.key,
+            explain:""
+          }
+        }).then(res=>{
+          console.log(res);
+        }).catch(err=>{
+
+        })
       }
     },
     mounted() {
@@ -80,13 +96,13 @@
         url:"http://127.0.0.1:7001/getRadio",
         data:{
           big_block:1,//大类号
-          category_id:20,//小类号
+          category_id:this.tableData.category_id,//小类号
           rows:5,
           pageIndex: 1,
           sub_id: 1,
         }
       }).then(res=>{
-        console.log(res);
+        // console.log(res);
         this.dataList = res.data.data.result;
         // this.tableData = res.data.data.rows;
       }).catch(err=>{
