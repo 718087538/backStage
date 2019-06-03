@@ -8,6 +8,13 @@ import routers from "./router";
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 
+import { AddressEdit } from 'vant';
+import 'vant/lib/index.css';
+Vue.use(AddressEdit);
+import { Area } from 'vant';
+
+Vue.use(Area);
+
 Vue.use(ElementUI);
 Vue.use(VRouter)
 

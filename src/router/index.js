@@ -1,5 +1,6 @@
 import HelloWorld from '@/components/HelloWorld'
 import Home from '@/components/home'
+import test from '@/components/test'
 
 
 const routers = [
@@ -17,6 +18,11 @@ const routers = [
     path: '/helloWorld',
     name: 'HelloWorld',
     component: HelloWorld
+  },
+  {
+    path: '/test',
+    name: 'test',
+    component: test
   },
 ]
 

@@ -21,25 +21,18 @@
       </el-row>
     </div>
     <!--这下面是已经插入的题目-->
-    <!--<el-collapse v-model="activeNames" @change="handleChange">-->
-      <!--<el-collapse-item title="题目概括：一致性 Consistency在界面中一致：" name="1">-->
-        <!--<div>题目:与现实生活一致：与现；所有的元素和结构需保持一致，-->
-          <!--比如：设计样式、图标和文本、元素的位置等。在界面中一致：所有的元素和结构需保持一致，-->
-          <!--比如：设计样式、图标和文本、元素的位置等。</div>-->
-        <!--<div>A:与现实生活一致：与现；</div>-->
-        <!--<div>B:在界面中一致：所有、元素的位置等。</div>-->
-        <!--<div>C:在界面中一致：所有的图标和文本、元素的位置等。</div>-->
-        <!--<div>D:在界面中一致：所有的元素和结构。</div>-->
-        <!--<div>Key:D</div>-->
-        <!--<div>解释:在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。</div>-->
-
-      <!--</el-collapse-item>-->
-      <!--<el-collapse-item title="反馈 Feedback" name="2">-->
-        <!--<div>控制反馈：通过界面样式和交互动效让用户可以清晰的感知自己的操作；</div>-->
-        <!--<div>页面反馈：操作后，通过页面元素的变化清晰地展现当前状态。</div>-->
-      <!--</el-collapse-item>-->
-    <!--</el-collapse>-->
-    <h1>{{tableData}}</h1>
+    <el-collapse v-model="activeNames" @change="handleChange">
+      <el-collapse-item :title="item.title" :name="idx" v-for="(item,idx) in dataList" :key="idx">
+        <div>题目:{{item.title}}</div>
+        <div>A:{{item.optiona}}</div>
+        <div>B:{{item.optionb}}</div>
+        <div>C:{{item.optionc}}</div>
+        <div>D:{{item.optiond}}</div>
+        <div>Key:{{item.key}}</div>
+        <div>解释:{{item.plain}}</div>
+      </el-collapse-item>
+    </el-collapse>
+    <!--<h1>{{tableData}}</h1>-->
   </div>
 </template>
 
@@ -57,7 +50,18 @@
         optionc:"",
         optiond:"",
         key:"",
+
         activeNames: ['1'],
+        rows:1,//每页显示几行
+        pageIndex:1,//从第几页开始
+        big_block: 1,//从那个大类查询
+        category_id:20,//从哪个小类查询
+        sub_id:"",//查询那道小题
+        dataList:[
+          {},
+          {},
+          {},
+        ],//查到的题目列表
       }
     },
     methods: {
@@ -68,6 +72,26 @@
       handleChange(val) {
         console.log(val);
       }
+    },
+    mounted() {
+      // alert(this.tableData.category_id);
+      this.$axios({
+        method: 'post',
+        url:"http://127.0.0.1:7001/getRadio",
+        data:{
+          big_block:1,//大类号
+          category_id:20,//小类号
+          rows:5,
+          pageIndex: 1,
+          sub_id: 1,
+        }
+      }).then(res=>{
+        console.log(res);
+        this.dataList = res.data.data.result;
+        // this.tableData = res.data.data.rows;
+      }).catch(err=>{
+        console.log(err)
+      });
     }
   }
 </script>

@@ -27,23 +27,11 @@
           {title: "javascript", name: "first"},
           {title: "CSS", name: "second"},
           {title: "HTML5", name: "third"},
-          {title: "VUE", name: "fourth"},
-          {title: "待定", name: "fifth"},
+          // {title: "VUE", name: "fourth"},
+          // {title: "待定", name: "fifth"},
         ],
         // list的值，传给自组件
-        tableData: [{
-          date: '对象1',
-          recentlyDate: '待实现',
-          name: '111',
-          category_id: '20',
-          sub_id: '1'
-        }, {
-          recentlyDate: '对象2',
-          date: '待实现',
-          name: '2222',
-          category_id: '20',
-          sub_id: '2'
-        }],
+        tableData: "",
       }
     },
     methods: {
@@ -56,52 +44,67 @@
         this.isShow = true;
         // console.log(tab.index);
         let idx = Number(tab.index);
-        if (idx === 0) {
+        if (idx === 0) {  //js
           this.$axios({
-            methods: 'post',
-            url:"127.0.0.1:7001/findList",
+            method: 'post',
+            url:"http://127.0.0.1:7001/findList",
             data:{
               big_block:1,//大类号
               category_id:30,//小类号
             }
           }).then(res=>{
-            console.log(res);
-            alert("111");
+            console.log(res.data.data.rows);
+            this.tableData = res.data.data.rows;
           }).catch(err=>{
            console.log(err)
-
           });
 
-          this.tableData = [{
-            date: '对象1',
-            recentlyDate: '待实现',
-            name: '111',
-            category_id: '20',
-            sub_id: '1'
-          }, {
-            date: '对象2',
-            recentlyDate: '待实现',
-            name: '2222',
-            category_id: '20',
-            sub_id: '2'
-          }]
-        } else if (idx === 1) {
-          this.tableData = [{
-            date: '待实现',
-            recentlyDate: '待实现',
-            name: '2222',
-          }]
-        } else if (idx === 2) {
-          this.tableData = [{
-            date: '待实现',
-            recentlyDate: '待实现',
-            name: '33333',
-          }]
+        } else if (idx === 1) {//css
+          this.$axios({
+            method: 'post',
+            url:"http://127.0.0.1:7001/findList",
+            data:{
+              big_block:1,//大类号
+              category_id:10,//小类号
+            }
+          }).then(res=>{
+            this.tableData = res.data.data.rows;
+          }).catch(err=>{
+            console.log(err)
+          });
+        } else if (idx === 2) {//html5
+          this.$axios({
+            method: 'post',
+            url:"http://127.0.0.1:7001/findList",
+            data:{
+              big_block:1,//大类号
+              category_id:20,//小类号
+            }
+          }).then(res=>{
+            this.tableData = res.data.data.rows;
+          }).catch(err=>{
+            console.log(err)
+          });
         }
       },
       selTab() {
         alert("sssssssss")
       }
+    },
+    mounted() {
+      this.$axios({
+        method: 'post',
+        url:"http://127.0.0.1:7001/findList",
+        data:{
+          big_block:1,//大类号
+          category_id:30,//小类号
+        }
+      }).then(res=>{
+        // console.log(res.data.data.rows);
+        this.tableData = res.data.data.rows;
+      }).catch(err=>{
+        console.log(err)
+      });
     }
   }
 </script>

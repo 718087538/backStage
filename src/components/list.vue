@@ -17,7 +17,7 @@
       style="width: 100%">
       <el-table-column
         label="Name"
-        prop="name">
+        prop="title">
       </el-table-column>
 
       <el-table-column
