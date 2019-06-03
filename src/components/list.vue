@@ -4,11 +4,11 @@
       <div class="title">试卷题目</div>
       <el-input
         placeholder="请输入试卷题目"
-        v-model="input"
+        v-model="title"
         clearable>
       </el-input>
       <el-row>
-        <el-button type="primary" class="addBtn">添加试卷</el-button>
+        <el-button type="primary" class="addBtn"  @click="addTest">添加试卷</el-button>
       </el-row>
     </div>
     <!--具体的试卷列表-->
@@ -64,6 +64,7 @@
     },
     data() {
       return {
+        title:'',
         isShow:false,//传给父组件
         input:"",//插入的试卷题目
         search: ''
@@ -80,6 +81,25 @@
       },
       handleDelete(index, row) {
         console.log(index, row);
+      },
+      addTest(){
+        this.$axios({
+          method: "post",
+          url: "http://127.0.0.1:7001/addTitle",
+          data: {
+            big_block: 1,//大类号
+            category_id: 30,//小类号
+            sub_id:23,
+            //上面3个决定了插到那张试卷
+            title:this.title,
+            creat_time:'2019-01-01',
+            // change_time:'2019-01-02',插入的时候不用传改变时间，改变的时候不用传插入时间
+          }
+        }).then(res => {
+          console.log(res);
+        }).catch(err => {
+
+        })
       }
     },
   }
