@@ -13,11 +13,17 @@
         <el-input v-model="optionc" clearable placeholder="选项C"></el-input>
         <el-input v-model="optiond" clearable placeholder="选项D"></el-input>
       </div>
-      <el-input class="line" placeholder="请输入答案" v-model="key" clearable>
-        <template slot="prepend">答案：</template>
-      </el-input>
+      <div class="whyTheKey">
+        <el-input class="line block1" placeholder="请输入答案" v-model="key" clearable>
+          <template slot="prepend">答案：</template>
+        </el-input>
+        <el-input class="line" placeholder="请输入解析" v-model="explain" clearable>
+          <template slot="prepend">解释：</template>
+        </el-input>
+      </div>
       <el-row>
         <el-button type="primary" class="addBtn" @click="add">确认添加</el-button>
+        <el-button type="primary" class="addBtn" @click="clear">清空</el-button>
       </el-row>
     </div>
     <!--这下面是已经插入的题目-->
@@ -32,32 +38,33 @@
         <div>解释:{{item.plain}}</div>
       </el-collapse-item>
     </el-collapse>
-    <h1>{{tableData}}</h1>
+    <!--<h1>{{tableData}}</h1>-->
   </div>
 </template>
 
 <script>
   export default {
     name: "aditQustion",
-    props:{
-      tableData:Object
+    props: {
+      tableData: Object
     },
-    data(){
-      return{
-        title:"",
-        optiona:"",
-        optionb:"",
-        optionc:"",
-        optiond:"",
-        key:"",
+    data() {
+      return {
+        title: "",
+        optiona: "",
+        optionb: "",
+        optionc: "",
+        optiond: "",
+        key: "",
+        explain: "",
 
         activeNames: ['1'],
-        rows:1,//每页显示几行
-        pageIndex:1,//从第几页开始
+        rows: 1,//每页显示几行
+        pageIndex: 1,//从第几页开始
         big_block: 1,//从那个大类查询
-        category_id:20,//从哪个小类查询
-        sub_id:"",//查询那道小题
-        dataList:[],//查到的题目列表
+        category_id: 20,//从哪个小类查询
+        sub_id: "",//查询那道小题
+        dataList: [],//查到的题目列表
       }
     },
     methods: {
@@ -69,43 +76,48 @@
         console.log(val);
       },
       //添加题目到本试卷
-      add(){
+      add() {
         this.$axios({
-          method:"post",
+          method: "post",
           url: "http://127.0.0.1:7001/add",
-          data:{
-            big_block:this.tableData.big_block,//大类号
-            category_id:this.tableData.category_id,//小类号
+          data: {
+            big_block: this.tableData.big_block,//大类号
+            category_id: this.tableData.category_id,//小类号
             sub_id: this.tableData.sub_id,
             //上面3个决定了插到那张试卷
-            title:this.title,
-            optiona: this.optiona,optionb: this.optionb,optionc: this.optionc,optiond: this.optiona,key:this.key,
-            explain:""
+            title: this.title,
+            optiona: this.optiona, optionb: this.optionb, optionc: this.optionc, optiond: this.optiona, key: this.key,
+            explain: this.explain,
           }
-        }).then(res=>{
+        }).then(res => {
           console.log(res);
-        }).catch(err=>{
+        }).catch(err => {
 
         })
+      },
+      clear() {
+        this.title = "",
+          this.optiona = "", this.optionb = "", this.optionc = "", this.optiona = "", this.key = "",
+          this.explain = ""
       }
     },
     mounted() {
       // alert(this.tableData.category_id);
       this.$axios({
         method: 'post',
-        url:"http://127.0.0.1:7001/getRadio",
-        data:{
-          big_block:1,//大类号
-          category_id:this.tableData.category_id,//小类号
-          rows:5,
+        url: "http://127.0.0.1:7001/getRadio",
+        data: {
+          big_block: 1,//大类号
+          category_id: this.tableData.category_id,//小类号
+          rows: 5,
           pageIndex: 1,
           sub_id: 1,
         }
-      }).then(res=>{
+      }).then(res => {
         // console.log(res);
         this.dataList = res.data.data.result;
         // this.tableData = res.data.data.rows;
-      }).catch(err=>{
+      }).catch(err => {
         console.log(err)
       });
     }
@@ -113,6 +125,7 @@
 </script>
 
 <style scoped>
+
   .app {
     padding: 10px 30px;
   }
@@ -120,19 +133,31 @@
   .app .head {
     margin-bottom: 30px;
   }
-.select{
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-}
+
+  .whyTheKey {
+    display: flex;
+  }
+
+  .whyTheKey .block1 {
+    width: 280px;
+  }
+
+  .select {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+
   .addQustion {
     /*display: flex;*/
     /*align-items: center;*/
     /*justify-content: space-around;*/
   }
-.line{
-  margin-top: 10px;
-}
+
+  .line {
+    margin-top: 10px;
+  }
+
   .addQustion .title {
     width: 100px;
   }
