@@ -96,11 +96,13 @@
         method: 'post',
         url:"http://127.0.0.1:7001/findList",
         data:{
+          rows:5,
+          pageIndex:1,
           big_block:1,//大类号
           category_id:30,//小类号
         }
       }).then(res=>{
-        // console.log(res.data.data.rows);
+        console.log(res.data.data.rows,"111");
         this.tableData = res.data.data.rows;
       }).catch(err=>{
         console.log(err)

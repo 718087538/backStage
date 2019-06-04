@@ -84,15 +84,12 @@
         console.log(index, row);
       },
       addTest(){
+
         // console.log(this.tableData,"11");
         // alert(this.tableData[0].sub_id,"22");
         // return false;
-
         this.$axios({
-
-
           // 插入试卷时，每个小类至少要有1个至，因为需要依据第一个值的big_block和category_id获取插入位置
-
           method: "post",
           url: "http://127.0.0.1:7001/addTitle",
           data: {
@@ -106,6 +103,18 @@
           }
         }).then(res => {
           console.log(res);
+          console.log(res.data.data.result.rows[0].sub_id);
+          // 插入成功后直击先在本地更新，最上面加一个。
+          this.tableData.unshift({
+            big_block: this.tableData[0].big_block,
+            category_id: this.tableData[0].category_id,//小类号
+            title:this.title,
+            creat_time:'2019-01-01',
+              sub_id:res.data.data.result.rows[0].sub_id
+          })
+
+          // 删除最后一个，保证分页的数量
+          this.tableData.pop();
         }).catch(err => {
 
         })
