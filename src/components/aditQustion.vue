@@ -38,7 +38,7 @@
         <div>解释:{{item.plain}}</div>
       </el-collapse-item>
     </el-collapse>
-    <!--<h1>{{tableData}}</h1>-->
+    <h1>{{tableData.sub_id}}</h1>
   </div>
 </template>
 
@@ -107,11 +107,11 @@
         method: 'post',
         url: "http://127.0.0.1:7001/getRadio",
         data: {
-          big_block: 1,//大类号
+          big_block: this.tableData.big_block,//大类号
           category_id: this.tableData.category_id,//小类号
           rows: 5,
           pageIndex: 1,
-          sub_id: 1,
+          sub_id: this.tableData.sub_id,
         }
       }).then(res => {
         // console.log(res);

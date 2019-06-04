@@ -52,7 +52,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <h1>{{tableData}}</h1>
+    <!--<h1>{{tableData}}</h1>-->
   </div>
 
 </template>
@@ -84,23 +84,25 @@
         console.log(index, row);
       },
       addTest(){
-        alert(this.tableData.category_id,"11");
-        alert(this.tableData.sub_id,"22");
-        return false;
+        // console.log(this.tableData,"11");
+        // alert(this.tableData[0].sub_id,"22");
+        // return false;
 
         this.$axios({
 
 
+          // 插入试卷时，每个小类至少要有1个至，因为需要依据第一个值的big_block和category_id获取插入位置
+
           method: "post",
           url: "http://127.0.0.1:7001/addTitle",
           data: {
-            big_block: this.tableData.big_block,//大类号
-            category_id: 33,//小类号
-            sub_id: 20,
+            big_block: this.tableData[0].big_block,//大类号
+            category_id: this.tableData[0].category_id,//小类号
+            // sub_id: 20,//设置了自增还要传值？？？
             //上面3个决定了插到那张试卷
             title:this.title,
             creat_time:'2019-01-01',
-            // change_time:'2019-01-02',插入的时候不用传改变时间，改变的时候不用传插入时间
+            // change_time:'2019-01-02',//插入的时候不用传改变时间，改变的时候不用传插入时间
           }
         }).then(res => {
           console.log(res);
