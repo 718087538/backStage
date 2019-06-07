@@ -44,19 +44,18 @@
         this.editNum = index
       },
       // 删除某一套试卷
-      handleDelete:function(index,category_id,sub_id){
+      handleDelete:function(data){
+        console.log(data);
         this.$axios({
           method: 'post',
-          url:"http://127.0.0.1:7001/delete",
+          url:"http://127.0.0.1:7001/dropList",
           data:{
-            rows:this.rows,
-            pageIndex:this.pageIndex,
-            big_block:this.big_block,//大类号
-            category_id:data,//小类号
+            big_block:Number(data.big_block),//大类号
+            category_id:data.category_id,//小类号
+            sub_id:data.sub_id,
           }
         }).then(res=>{
-          // console.log(res.data,"111");
-          this.tableData = res.data.data;
+          console.log(res,"删除成功");
         }).catch(err=>{
           console.log(err)
         });

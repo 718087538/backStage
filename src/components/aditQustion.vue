@@ -36,6 +36,7 @@
         <div>D:{{item.optiond}}</div>
         <div>Key:{{item.key}}</div>
         <div>解释:{{item.plain}}</div>
+        <button @click="deleteThis(idx)">删除该题</button>
       </el-collapse-item>
     </el-collapse>
     <pre>{{tableData}}</pre>
@@ -116,6 +117,25 @@
         this.title = "",
           this.optiona = "", this.optionb = "", this.optionc = "", this.optiona = "", this.key = "",
           this.explain = ""
+      },
+      // 删除该题
+      deleteThis(idx){
+        // console.log(this.dataList[idx],"我是本题");
+        // let question = this.dataList[idx];
+        this.$axios({
+          method: 'post',
+          url: "http://127.0.0.1:7001/dropQuestion",
+          data: {
+            big_block: this.dataList[idx].big_block,//大类号
+            category_id: this.dataList[idx].category_id,//小类号
+            sub_id: this.dataList[idx].sub_id,
+            id:this.dataList[idx].id,
+          }
+        }).then(res => {
+          console.log(res);
+        }).catch(err => {
+          console.log(err)
+        });
       }
     },
     mounted() {

@@ -79,10 +79,14 @@
         // 第二个参数this.this.isShow是需要传的值
         this.$emit('childByValue', this.isShow,index,row.category_id,row.sub_id);
       },
-      handleDelete(index, row) {
-        console.log(index,row.category_id,row.sub_id,"ssss");
-        this.$emit('handleDelete',index,row.category_id,row.sub_id);
+      handleDelete(index,row) {
+        console.log(index,row);
+        this.$emit('handleDelete',row);
       },
+      // handleDelete(index, row) {
+      //   console.log(index,row.category_id,row.sub_id,"ssss");
+      //   this.$emit('handleDelete',index,row.category_id,row.sub_id);
+      // },
       addTest(){
         // console.log(this.tableData,"11");
         // alert(this.tableData[0].sub_id,"22");
