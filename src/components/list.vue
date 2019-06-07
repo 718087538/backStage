@@ -13,7 +13,7 @@
     </div>
     <!--具体的试卷列表-->
     <el-table
-      :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
+      :data="tableData.result.rows.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
       style="width: 100%">
       <el-table-column
         label="Name"
@@ -52,7 +52,6 @@
         </template>
       </el-table-column>
     </el-table>
-    <!--<h1>{{tableData}}</h1>-->
   </div>
 
 </template>
@@ -68,23 +67,23 @@
         title:'',
         isShow:false,//传给父组件
         input:"",//插入的试卷题目
-        search: ''
+        search: '',
       }
     },
     methods: {
+
       handleEdit(index, row) {
         // index代表第几行，row代表这一行的信息
-        console.log(row.category_id,row.sub_id);//这一行的信息
         // row.category_id,row.sub_id感觉没必要传给父组件，先不删，等下再看
         // childByValue是在父组件on监听的方法
         // 第二个参数this.this.isShow是需要传的值
         this.$emit('childByValue', this.isShow,index,row.category_id,row.sub_id);
       },
       handleDelete(index, row) {
-        console.log(index, row);
+        console.log(index,row.category_id,row.sub_id,"ssss");
+        this.$emit('handleDelete',index,row.category_id,row.sub_id);
       },
       addTest(){
-
         // console.log(this.tableData,"11");
         // alert(this.tableData[0].sub_id,"22");
         // return false;
@@ -111,15 +110,17 @@
             title:this.title,
             creat_time:'2019-01-01',
               sub_id:res.data.data.result.rows[0].sub_id
-          })
+          });
 
           // 删除最后一个，保证分页的数量
           this.tableData.pop();
         }).catch(err => {
-
         })
       }
     },
+    mounted() {
+
+    }
   }
 </script>
 

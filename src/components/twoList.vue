@@ -2,8 +2,8 @@
   <div>
     <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
       <el-tab-pane v-for="(item ,idx) in twoList" :key="idx" :label="item.title" :name="item.name" @click="selTab">
-        <List v-if="isShow" @childByValue="childByValue" :tableData="tableData"></List>
-        <AditQustion v-else :tableData="tableData[editNum]"></AditQustion>
+        <List v-if="isShow" @childByValue="childByValue" :tableData="tableData" @handleDelete = "handleDelete"></List>
+        <AditQustion v-else :tableData="tableData.result.rows[editNum]"></AditQustion>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -19,6 +19,10 @@
 
     data() {
       return {
+        rows:100,
+        pageIndex:1,
+        big_block:1,
+
         isShow: true,//试卷组件是否显示
         editNum: "",//编辑第几条试卷
         input: '',
@@ -37,76 +41,61 @@
     methods: {
       childByValue: function (isShow, index) {
         this.isShow = isShow,
-          this.editNum = index
+        this.editNum = index
+      },
+      // 删除某一套试卷
+      handleDelete:function(index,category_id,sub_id){
+        this.$axios({
+          method: 'post',
+          url:"http://127.0.0.1:7001/delete",
+          data:{
+            rows:this.rows,
+            pageIndex:this.pageIndex,
+            big_block:this.big_block,//大类号
+            category_id:data,//小类号
+          }
+        }).then(res=>{
+          // console.log(res.data,"111");
+          this.tableData = res.data.data;
+        }).catch(err=>{
+          console.log(err)
+        });
       },
 
+      // 加载试题列表的方法
+      seeList(data){
+        this.$axios({
+          method: 'post',
+          url:"http://127.0.0.1:7001/findList",
+          data:{
+            rows:this.rows,
+            pageIndex:this.pageIndex,
+            big_block:this.big_block,//大类号
+            category_id:data,//小类号
+          }
+        }).then(res=>{
+          // console.log(res.data,"111");
+          this.tableData = res.data.data;
+        }).catch(err=>{
+          console.log(err)
+        });
+      },
+      // 切换顶部的tab
       handleClick(tab) {
         this.isShow = true;
         // console.log(tab.index);
         let idx = Number(tab.index);
         if (idx === 0) {  //js
-          this.$axios({
-            method: 'post',
-            url:"http://127.0.0.1:7001/findList",
-            data:{
-              big_block:1,//大类号
-              category_id:30,//小类号
-            }
-          }).then(res=>{
-            console.log(res.data.data.rows);
-            this.tableData = res.data.data.rows;
-          }).catch(err=>{
-           console.log(err)
-          });
-
+          this.seeList(30);
         } else if (idx === 1) {//css
-          this.$axios({
-            method: 'post',
-            url:"http://127.0.0.1:7001/findList",
-            data:{
-              big_block:1,//大类号
-              category_id:10,//小类号
-            }
-          }).then(res=>{
-            this.tableData = res.data.data.rows;
-          }).catch(err=>{
-            console.log(err)
-          });
+          this.seeList(10);
         } else if (idx === 2) {//html5
-          this.$axios({
-            method: 'post',
-            url:"http://127.0.0.1:7001/findList",
-            data:{
-              big_block:1,//大类号
-              category_id:20,//小类号
-            }
-          }).then(res=>{
-            this.tableData = res.data.data.rows;
-          }).catch(err=>{
-            console.log(err)
-          });
+          this.seeList(20);
         }
       },
-      selTab() {
-        alert("sssssssss")
-      }
     },
     mounted() {
-      this.$axios({
-        method: 'post',
-        url:"http://127.0.0.1:7001/findList",
-        data:{
-          rows:5,
-          pageIndex:1,
-          big_block:1,//大类号
-          category_id:30,//小类号
-        }
-      }).then(res=>{
-        console.log(res.data.data.rows,"111");
-        this.tableData = res.data.data.rows;
-      }).catch(err=>{
-        console.log(err)
-      });
+      this.seeList(30);
     }
   }
 </script>

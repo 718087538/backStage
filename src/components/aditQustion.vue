@@ -38,7 +38,7 @@
         <div>解释:{{item.plain}}</div>
       </el-collapse-item>
     </el-collapse>
-    <h1>{{tableData.sub_id}}</h1>
+    <pre>{{tableData}}</pre>
   </div>
 </template>
 
@@ -86,11 +86,28 @@
             sub_id: this.tableData.sub_id,
             //上面3个决定了插到那张试卷
             title: this.title,
-            optiona: this.optiona, optionb: this.optionb, optionc: this.optionc, optiond: this.optiona, key: this.key,
+            optiona: this.optiona, optionb: this.optionb, optionc: this.optionc, optiond: this.optiond, key: this.key,
             explain: this.explain,
           }
         }).then(res => {
           console.log(res);
+
+          this.dataList.unshift({
+            title:this.title,
+            optiona: this.optiona,
+            optionb: this.optionb,
+            optionc: this.optionc,
+            optiond: this.optiond,
+            key: this.key,
+            explain: this.explain,
+          });
+
+          // 删除最后一个，保证分页的数量
+          this.dataList.pop();
+
+
+
+
         }).catch(err => {
 
         })
@@ -102,14 +119,14 @@
       }
     },
     mounted() {
-      // alert(this.tableData.category_id);
+      console.log(this.tableData.category_id);
       this.$axios({
         method: 'post',
         url: "http://127.0.0.1:7001/getRadio",
         data: {
           big_block: this.tableData.big_block,//大类号
           category_id: this.tableData.category_id,//小类号
-          rows: 5,
+          rows: 100,
           pageIndex: 1,
           sub_id: this.tableData.sub_id,
         }

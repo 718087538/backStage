@@ -41,7 +41,7 @@
 
 }
   .el-tabs,.el-tabs--left{
-    height: 600px !important;
+    height: auto !important;
   }
 
 </style>
