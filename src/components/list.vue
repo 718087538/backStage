@@ -1,67 +1,59 @@
 <template>
   <div>
-    <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="单选" name="first">
-
-        <div class="addQustion">
-          <div class="title">试卷题目</div>
-          <el-input
-            placeholder="请输入试卷题目"
-            v-model="title"
-            clearable>
-          </el-input>
-          <el-row>
-            <el-button type="primary" class="addBtn" @click="addTest">添加试卷</el-button>
-          </el-row>
-        </div>
-        <!--具体的试卷列表-->
-        <el-table
-          :data="tableData.result.rows.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
-          style="width: 100%">
-          <el-table-column
-            label="Name"
-            prop="title">
-          </el-table-column>
-
-          <el-table-column
-            label="最近一次改变"
-            prop="recentlyDate">
-          </el-table-column>
-
-          <el-table-column
-            label="创建时间"
-            prop="date">
-          </el-table-column>
 
 
-          <el-table-column
-            align="right">
-            <template slot="header" slot-scope="scope">
-              <!--<el-input-->
-              <!--v-model="search"-->
-              <!--size="mini"-->
-              <!--placeholder="输入关键字搜索"/>-->
-            </template>
-            <template slot-scope="scope">
-              <el-button
-                size="mini"
-                @click="handleEdit(scope.$index, scope.row)">Edit
-              </el-button>
-              <el-button
-                size="mini"
-                type="danger"
-                @click="handleDelete(scope.$index, scope.row)">Delete
-              </el-button>
-            </template>
-          </el-table-column>
-        </el-table>
+    <div class="addQustion">
+      <div class="title">试卷题目</div>
+      <el-input
+        placeholder="请输入试卷题目"
+        v-model="title"
+        clearable>
+      </el-input>
+      <el-row>
+        <el-button type="primary" class="addBtn"  @click="addTest">添加试卷</el-button>
+      </el-row>
+    </div>
+    <!--具体的试卷列表-->
+    <el-table
+      :data="tableData.result.rows.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
+      style="width: 100%">
+      <el-table-column
+        label="Name"
+        prop="title">
+      </el-table-column>
 
-      </el-tab-pane>
-      <el-tab-pane label="简单" name="second">简答</el-tab-pane>
-    </el-tabs>
+      <el-table-column
+        label="最近一次改变"
+        prop="recentlyDate">
+      </el-table-column>
 
-    <!-- -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+      <el-table-column
+        label="创建时间"
+        prop="date">
+      </el-table-column>
 
+
+      <el-table-column
+        align="right">
+        <template slot="header" slot-scope="scope">
+          <!--<el-input-->
+            <!--v-model="search"-->
+            <!--size="mini"-->
+            <!--placeholder="输入关键字搜索"/>-->
+        </template>
+        <template slot-scope="scope">
+          <el-button
+            size="mini"
+            @click="handleEdit(scope.$index, scope.row)">Edit
+          </el-button>
+          <el-button
+            size="mini"
+            type="danger"
+            @click="handleDelete(scope.$index, scope.row)">Delete
+          </el-button>
+        </template>
+      </el-table-column>
+    </el-table>
   </div>
 
 </template>
@@ -69,14 +61,14 @@
 <script>
   export default {
     name: "list",
-    props: {
-      tableData: Array
+    props:{
+      tableData:Array
     },
     data() {
       return {
-        title: '',
-        isShow: false,//传给父组件
-        input: "",//插入的试卷题目
+        title:'',
+        isShow:false,//传给父组件
+        input:"",//插入的试卷题目
         search: '',
       }
     },
@@ -87,17 +79,17 @@
         // row.category_id,row.sub_id感觉没必要传给父组件，先不删，等下再看
         // childByValue是在父组件on监听的方法
         // 第二个参数this.this.isShow是需要传的值
-        this.$emit('childByValue', this.isShow, index, row.category_id, row.sub_id);
+        this.$emit('childByValue', this.isShow,index,row.category_id,row.sub_id);
       },
-      handleDelete(index, row) {
-        console.log(index, row);
-        this.$emit('handleDelete', row);
+      handleDelete(index,row) {
+        console.log(index,row);
+        this.$emit('handleDelete',row);
       },
       // handleDelete(index, row) {
       //   console.log(index,row.category_id,row.sub_id,"ssss");
       //   this.$emit('handleDelete',index,row.category_id,row.sub_id);
       // },
-      addTest() {
+      addTest(){
         // console.log(this.tableData.result.rows[0].big_block,"11");
         // alert(this.tableData[0].sub_id,"22");
         let addDate = this.tableData.result.rows[0];
@@ -108,7 +100,7 @@
           data: {
             big_block: addDate.big_block,//大类号
             category_id: addDate.category_id,//小类号
-            title: this.title,
+            title:this.title,
           }
         }).then(res => {
           console.log(res);
@@ -135,17 +127,15 @@
 </script>
 
 <style scoped>
-  .addQustion {
+  .addQustion{
     display: flex;
     align-items: center;
     justify-content: space-around;
   }
-
-  .addQustion .title {
+  .addQustion .title{
     width: 100px;
   }
-
-  .addBtn {
+  .addBtn{
     margin-left: 10px;
   }
 </style>
