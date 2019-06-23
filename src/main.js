@@ -6,6 +6,7 @@ import VRouter from 'vue-router'
 import axios from 'axios';
 import routers from "./router";
 import ElementUI from 'element-ui';
+import store from './store'//引入store
 import 'element-ui/lib/theme-chalk/index.css';
 
 import { AddressEdit } from 'vant';
@@ -29,6 +30,7 @@ const router =new VRouter({
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
+  store,//使用store
   router,
   render:h =>h(App)
 })
