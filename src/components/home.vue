@@ -1,6 +1,7 @@
 <template>
   <div class="app">
-    <div class="left">
+    {{changableNum}}
+    <!-- <div class="left">
       <template>
         <el-tabs :tab-position="tabPosition" style="height: 200px;">
           <el-tab-pane label="前端">
@@ -18,30 +19,34 @@
           <el-tab-pane label="待定">定时任务补偿</el-tab-pane>
         </el-tabs>
       </template>
-    </div>
+    </div>-->
   </div>
 </template>
 
 <script>
-  import TwoList from './twoList'
-  export default {
-    name: "",
-    components:{TwoList},
-    data(){
-      return{
-        tabPosition: 'left',//左右排列
-        activeName: 'first',//自动选择左边第一个
-      }
-    }
-  }
+import {mapState} from 'vuex';
+import TwoList from "./twoList";
+export default {
+  name: "",
+  components: { TwoList },
+  data() {
+    return {
+      tabPosition: "left", //左右排列
+      activeName: "first" //自动选择左边第一个
+    };
+  },
+  // computed: {
+  //   num() {
+  //     return this.$store.state.changableNum;
+  //   }
+  // }
+  computed:mapState(['changableNum'])
+};
 </script>
 
 <style scoped>
-.app{
-
+.el-tabs,
+.el-tabs--left {
+  height: auto !important;
 }
-  .el-tabs,.el-tabs--left{
-    height: auto !important;
-  }
-
 </style>

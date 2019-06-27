@@ -31,8 +31,6 @@
           {title: "javascript", name: "first"},
           {title: "CSS", name: "second"},
           {title: "HTML5", name: "third"},
-          // {title: "VUE", name: "fourth"},
-          // {title: "待定", name: "fifth"},
         ],
         // list的值，传给自组件
         tableData: "",
@@ -82,7 +80,6 @@
       // 切换顶部的tab
       handleClick(tab) {
         this.isShow = true;
-        // console.log(tab.index);
         let idx = Number(tab.index);
         if (idx === 0) {  //js
           this.seeList(30);
@@ -95,6 +92,7 @@
     },
     mounted() {
       this.seeList(30);
+      $store.commit('seeList',30) 
     }
   }
 </script>
