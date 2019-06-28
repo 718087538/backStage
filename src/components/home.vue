@@ -1,36 +1,28 @@
 <template>
+<!-- 首页 -->
   <div class="app">
-    <div class="left">
-      <template>
-        <el-tabs :tab-position="tabPosition" style="height: 200px;">
-          <el-tab-pane label="前端">
-            <el-tabs type="border-card" @tab-click="changeTab">
-              <!-- 大类下面的小类 -->
-              <el-tab-pane v-for="item in category" :key="item.index" :label="item.title">
-                <!-- 插入试题的组件 -->
-                <add></add>
-              </el-tab-pane>
-            </el-tabs>
-          </el-tab-pane>
-          <el-tab-pane label="后端">配置管理</el-tab-pane>
-          <el-tab-pane label="数据库">角色管理</el-tab-pane>
-          <el-tab-pane label="网络">定时任务补偿</el-tab-pane>
-          <el-tab-pane label="算法">定时任务补偿</el-tab-pane>
-          <el-tab-pane label="安全">定时任务补偿</el-tab-pane>
-          <el-tab-pane label="非技术">定时任务补偿</el-tab-pane>
-          <el-tab-pane label="团队合作">定时任务补偿</el-tab-pane>
-          <el-tab-pane label="英语">定时任务补偿</el-tab-pane>
-          <el-tab-pane label="待定">定时任务补偿</el-tab-pane>
-          <el-tab-pane label="待定">定时任务补偿</el-tab-pane>
-        </el-tabs>
-      </template>
+    <aside class="left">
+      <el-tabs :tab-position="tabPosition" style="height: 200px;">
+        <router-link class="list" to="web">前端</router-link>
+        <router-link class="list" to="server">后端</router-link>
+        <router-link class="list" to="">数据库</router-link>
+        <router-link class="list" to="">网络</router-link>
+        <router-link class="list" to="">算法</router-link>
+        <router-link class="list" to="">安全</router-link>
+        <router-link class="list" to="">英语</router-link>
+        <router-link class="list" to="">非技术</router-link>
+        <router-link class="list" to="add">插入新题</router-link>
+      </el-tabs>
+    </aside>
+    <div class="right">
+      <router-view></router-view>
     </div>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
-import add from "./add"
+import add from "./add";
 export default {
   name: "",
   components: {
@@ -57,9 +49,20 @@ export default {
 };
 </script>
 
-<style scoped>
-.el-tabs,
-.el-tabs--left {
-  height: auto !important;
+<style scoped lang="scss">
+.app {
+  display: flex;
+  height: 100vh;
+}
+.left {
+  width: 180px;
+  background: rgb(71, 107, 226);
+}
+.left .list{
+  display: block;
+  text-align: center;
+}
+.right{
+  flex: 1;
 }
 </style>

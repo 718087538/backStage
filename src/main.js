@@ -13,14 +13,14 @@ import { AddressEdit } from 'vant';
 import 'vant/lib/index.css';
 Vue.use(AddressEdit);
 import { Area } from 'vant';
+Vue.use(Area)
 
-Vue.use(Area);
-
-Vue.use(ElementUI);
+Vue.use(ElementUI)
 Vue.use(VRouter)
 
 //把axios 挂载到vue的原型
 Vue.prototype.$axios = axios;
+
 
 Vue.config.productionTip = false
 const router =new VRouter({
